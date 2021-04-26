@@ -23,8 +23,8 @@ public class Menu {
 				System.out.println("Ingrese los valores separados por");
 				String num4 = scan.nextLine();
 				String[] parts = num4.split(SPLIT);
-				int columns = Integer.parseInt(parts[0]);
-				int rows = Integer.parseInt(parts[1]);
+				int rows = Integer.parseInt(parts[0]);
+				int columns = Integer.parseInt(parts[1]);
 				int snakes = Integer.parseInt(parts[2]);
 				int ladder = Integer.parseInt(parts[3]);
 				num4 = parts[4];
@@ -34,6 +34,8 @@ public class Menu {
 				System.out.println("Press enter to roll");// giving the user a chance to roll
 				scan.nextLine();// waiting for enter key
 				System.out.println(game.rollDice() + "<= resultado dado");
+				//System.out.println(game.printBoard(rows,columns,1,1,(rows*columns), ""));
+				game.printBoard(rows,columns,1,1,(rows*columns), "");
 			}
 			if (num.equals("2")) {
 
@@ -60,7 +62,8 @@ public class Menu {
 
 			}
 		}
-		m(columns,rows,snakes,ladder,num4,players,ini,ch);
+		//m(columns,rows,snakes,ladder,num4,players,ini,ch);
+		
 
 	}
 }
