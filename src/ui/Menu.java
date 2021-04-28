@@ -2,6 +2,7 @@ package ui;
 
 import java.util.Scanner;
 
+import model.Board;
 import model.Game;
 
 public class Menu {
@@ -35,7 +36,7 @@ public class Menu {
 				scan.nextLine();// waiting for enter key
 				System.out.println(game.rollDice() + "<= resultado dado");
 				//System.out.println(game.printBoard(rows,columns,1,1,(rows*columns), ""));
-				game.printBoard(rows,columns,1,1,(rows*columns), "");
+				game.printBoard(rows,columns,1,1,(rows*columns), "",1,"");
 			}
 			if (num.equals("2")) {
 

@@ -4,12 +4,15 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
-	private int movement;;
+	private int movement;
+	private Board board;
 	public final static String SPLIT = " ";
 	Scanner scanner = new Scanner(System.in);
 
 	public Game() {
 		setMovement(0);
+		board = new Board(3,4);
+		System.out.println(board);
 	}
 
 	public String playSnake(int columns, int rows, int snakes, int ladder, String num4, int players, int ini, char ch) {
@@ -52,27 +55,28 @@ public class Game {
 		this.movement = movement;
 	}
 
-	public void printBoard(int rows, int columns, int rows1, int colums1,int cuadros,String out) {
+	public void printBoard(int rows, int columns, int rows1, int colums1,int cuadros,String out,int count,String out2) {
 		if (cuadros >= 1) {
 				if(rows >= rows1) {
 					
 					if(columns >= colums1){
 						colums1++;
-						out += " "+cuadros+" ";
-						
+						out = " "+count+" ";
+						out2= out2+out;
 						//printBoard(rows,columns,rows1,colums1,cuadros,out);
 					}
 					else {
-						out += "\n "+cuadros+" ";
+						//out2 = "\n "+count+" "+out2;
 						rows1++;
 						colums1=2;
 					}
 				}
+				count++;
 				cuadros--;
-				printBoard(rows,columns,rows1,colums1,cuadros,out);
+				printBoard(rows,columns,rows1,colums1,cuadros,out,count,out2);
 		}
 		else if(cuadros ==0){
-			System.out.println(out);
+			System.out.println(out2);
 		}
 		
 	
