@@ -5,14 +5,13 @@ import java.util.Scanner;
 
 public class Game {
 	private int movement;
-	private Board board;
+	
 	public final static String SPLIT = " ";
 	Scanner scanner = new Scanner(System.in);
 
 	public Game() {
-		setMovement(0);
-		board = new Board(3,4);
-		System.out.println(board);
+		Board lm = new Board(3,4);
+		System.out.println(lm);
 	}
 
 	public String playSnake(int columns, int rows, int snakes, int ladder, String num4, int players, int ini, char ch) {
@@ -32,7 +31,7 @@ public class Game {
 				movement++;
 			}
 		}
-		// playSnake(columns,rows,snakes,ladder,num4,players,ini,ch);
+		 playSnake(columns,rows,snakes,ladder,num4,players,ini,ch);
 		return out;
 	}
 
@@ -81,4 +80,7 @@ public class Game {
 		
 	
 	}
+	
+	
+	
 }

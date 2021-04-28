@@ -2,7 +2,6 @@ package ui;
 
 import java.util.Scanner;
 
-import model.Board;
 import model.Game;
 
 public class Menu {
@@ -10,9 +9,10 @@ public class Menu {
 	private Scanner scan = new Scanner(System.in);
 	private Game game;
 
-	Menu() {
+	public Menu() {
 		game = new Game();
 	}
+
 
 	public void menu(String num) {
 		if (num.equals("2") || num.equals("1")) {
@@ -34,9 +34,9 @@ public class Menu {
 				m(columns, rows, snakes, ladder, num4, players, 0, 'a');
 				System.out.println("Press enter to roll");// giving the user a chance to roll
 				scan.nextLine();// waiting for enter key
-				System.out.println(game.rollDice() + "<= resultado dado");
+				//System.out.println(game.rollDice() + "<= resultado dado");
 				//System.out.println(game.printBoard(rows,columns,1,1,(rows*columns), ""));
-				game.printBoard(rows,columns,1,1,(rows*columns), "",1,"");
+				//game.printBoard(rows,columns,1,1,(rows*columns), "",1,"");
 			}
 			if (num.equals("2")) {
 
@@ -63,7 +63,7 @@ public class Menu {
 
 			}
 		}
-		//m(columns,rows,snakes,ladder,num4,players,ini,ch);
+		m(columns,rows,snakes,ladder,num4,players,ini,ch);
 		
 
 	}

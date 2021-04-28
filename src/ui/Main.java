@@ -1,4 +1,5 @@
 package ui;
+
 public class Main {
 	private Menu menu;
 	public Main() {
@@ -6,6 +7,7 @@ public class Main {
 		
 	}
 	public static void main(String args[]) {
+		
 		Main m=new Main();
 		m.menu();
 		
