@@ -5,13 +5,24 @@ import java.util.Scanner;
 
 public class Game {
 	private int movement;
-	
+
 	public final static String SPLIT = " ";
+
 	Scanner scanner = new Scanner(System.in);
+	private int positionA;
+	private int positionB;
+	public final static String snakes = "ABCDEFGHIJKLMÑOPQRSTW";
+	private Board lm;
 
 	public Game() {
-		Board lm = new Board(3,4);
-		System.out.println(lm);
+		positionA = 0;
+		positionB = 1;
+	}
+
+	public String printBoard(int col, int row) {
+		lm = new Board(row, col);
+		String out = lm.prePrint();
+		return out;
 	}
 
 	public String playSnake(int columns, int rows, int snakes, int ladder, String num4, int players, int ini, char ch) {
@@ -31,18 +42,14 @@ public class Game {
 				movement++;
 			}
 		}
-		 playSnake(columns,rows,snakes,ladder,num4,players,ini,ch);
+		// playSnake(columns,rows,snakes,ladder,num4,players,ini,ch);
 		return out;
 	}
 
 	public int rollDice() {
 		Random rand = new Random();
-		int num = 6;
+		int num = rand.nextInt((6 - 1) + 1) + 1;
 
-		while (num == 6) {
-
-			num = rand.nextInt((6 - 1) + 1) + 1;
-		}
 		return num;
 	}
 
@@ -54,33 +61,71 @@ public class Game {
 		this.movement = movement;
 	}
 
-	public void printBoard(int rows, int columns, int rows1, int colums1,int cuadros,String out,int count,String out2) {
+	public void printBoard(int rows, int columns, int rows1, int colums1, int cuadros, String out, int count,
+			String out2) {
 		if (cuadros >= 1) {
-				if(rows >= rows1) {
-					
-					if(columns >= colums1){
-						colums1++;
-						out = " "+count+" ";
-						out2= out2+out;
-						//printBoard(rows,columns,rows1,colums1,cuadros,out);
-					}
-					else {
-						//out2 = "\n "+count+" "+out2;
-						rows1++;
-						colums1=2;
-					}
+			if (rows >= rows1) {
+
+				if (columns >= colums1) {
+					colums1++;
+					out = " " + count + " ";
+					out2 = out2 + out;
+					// printBoard(rows,columns,rows1,colums1,cuadros,out);
+				} else {
+					// out2 = "\n "+count+" "+out2;
+					rows1++;
+					colums1 = 2;
 				}
-				count++;
-				cuadros--;
-				printBoard(rows,columns,rows1,colums1,cuadros,out,count,out2);
-		}
-		else if(cuadros ==0){
+			}
+			count++;
+			cuadros--;
+			printBoard(rows, columns, rows1, colums1, cuadros, out, count, out2);
+		} else if (cuadros == 0) {
 			System.out.println(out2);
 		}
-		
-	
+
 	}
-	
-	
-	
+
+	public Board getLm() {
+		return lm;
+	}
+
+	public void snakerPosition(int colum, int rows, int numSnackers) {
+		if (numSnackers > 0) {
+			int numCol = (int) Math.floor(Math.random() * (0 - colum) + colum);
+			int numRow = (int) Math.floor(Math.random() * (0 - rows) + rows);
+			int position = numCol * numRow;
+			if (position > 1 && position < colum * rows) {
+				String let = snakes.substring(positionA, positionB);
+
+				if (lm.positionSnake(position, let) == false) {
+					snakerPosition(colum, rows, numSnackers);
+				} else {
+					numSnackers--;
+					positionA++;
+					positionB++;
+					snakerPositionB(colum, rows, position, let);
+				}
+			}
+		}
+
+	}
+
+	public void snakerPositionB(int colum, int rows, int posA, String let) {
+
+		int numCol = (int) Math.floor(Math.random() * (0 - colum) + colum);
+		int numRow = (int) Math.floor(Math.random() * (0 - rows) + rows);
+		int position = numCol * numRow;
+		if (position > 1 && position < colum * rows) {
+			if (position < posA + colum || position > posA + colum) {
+				if (lm.positionSnake(position, let) == false) {
+					snakerPositionB(colum, rows, posA, let);
+				}
+			} else {
+				snakerPositionB(colum, rows, posA, let);
+			}
+		}
+
+	}
+
 }

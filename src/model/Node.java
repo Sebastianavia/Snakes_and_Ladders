@@ -3,15 +3,14 @@ package model;
 public class Node {
 	private int row;
 	private int col;
-	
-	
+	private String snakeColum;
+	private int pos;
 	private Node next;
 	private Node prev;
 	private Node up;
 	private Node down;
-	public Node(int r,int c) {
-		row = r;
-		col = c;
+	public Node(int po) {
+		pos = po;
 	}
 	public int getRow() {
 		return row;
@@ -47,6 +46,19 @@ public class Node {
 		down = d;
 	}
 	public String toString() {
-		return "("+ row +","+col +")";
+		return "["+ pos +"\t]";
+	}
+	
+	public int getPos() {
+		return pos;
+	}
+	public void setPos(int pos) {
+		this.pos = pos;
+	}
+	public String getSnakeColum() {
+		return snakeColum;
+	}
+	public void setSnakeColum(String snakeColum) {
+		this.snakeColum = snakeColum;
 	}
 }

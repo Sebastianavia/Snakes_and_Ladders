@@ -13,6 +13,7 @@ public class Main {
 		
 	}
 	private void menu() {
+		
 		menu.menu("1");
 		
 	}
