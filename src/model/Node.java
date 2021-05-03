@@ -11,6 +11,7 @@ public class Node {
 	private Node down;
 	public Node(int po) {
 		pos = po;
+		snakeColum = " ";
 	}
 	public int getRow() {
 		return row;
@@ -46,7 +47,7 @@ public class Node {
 		down = d;
 	}
 	public String toString() {
-		return "["+ pos +"\t]";
+		return "["+ pos +snakeColum+"\t]";
 	}
 	
 	public int getPos() {

@@ -24,6 +24,10 @@ public class Game {
 		String out = lm.prePrint();
 		return out;
 	}
+	public String printB() {
+		String out = lm.prePrint();
+		return out;
+	}
 
 	public String playSnake(int columns, int rows, int snakes, int ladder, String num4, int players, int ini, char ch) {
 		String out = "";
@@ -90,40 +94,61 @@ public class Game {
 		return lm;
 	}
 
-	public void snakerPosition(int colum, int rows, int numSnackers) {
+	public void snakerPosition(int colum, int rows, int numSnackers,int rand,int value) {
+		System.out.println(numSnackers);
 		if (numSnackers > 0) {
-			int numCol = (int) Math.floor(Math.random() * (0 - colum) + colum);
-			int numRow = (int) Math.floor(Math.random() * (0 - rows) + rows);
-			int position = numCol * numRow;
-			if (position > 1 && position < colum * rows) {
+			
+			//int numCol = (int) Math.floor(Math.random() * (1 - colum) + colum);
+			//int numRow = (int) Math.floor(Math.random() * (1 - rows) + rows);
+			int position = rand;
+			int total =colum * rows;
+			if (position > 1 && position < total) {
+			
 				String let = snakes.substring(positionA, positionB);
-
 				if (lm.positionSnake(position, let) == false) {
-					snakerPosition(colum, rows, numSnackers);
+					
+					
+					rand =  (int) (Math.random() * value) + 2;
+					snakerPosition(colum, rows, numSnackers,rand,value);
 				} else {
 					numSnackers--;
 					positionA++;
 					positionB++;
-					snakerPositionB(colum, rows, position, let);
+					System.out.println("antes de asignar "+ position);
+					//position= position+colum;
+					System.out.println("valor que envio " +position);
+					snakerPositionB(colum, rows, position, let,value);
+					
+					rand = (int) (Math.random() * value) + 2;
+					snakerPosition(colum, rows, numSnackers,rand,value);
 				}
+			}else {
+				
+				rand = (int) (Math.random() * value) + 2;
+				snakerPosition(colum, rows, numSnackers,rand,value);
 			}
 		}
 
 	}
 
-	public void snakerPositionB(int colum, int rows, int posA, String let) {
-
-		int numCol = (int) Math.floor(Math.random() * (0 - colum) + colum);
-		int numRow = (int) Math.floor(Math.random() * (0 - rows) + rows);
-		int position = numCol * numRow;
-		if (position > 1 && position < colum * rows) {
-			if (position < posA + colum || position > posA + colum) {
+	public void snakerPositionB(int colum, int rows, int posA, String let,int value) {
+		
+		
+		int position = (int) (Math.random() * value) + 2;
+		int posB=colum+posA;
+		int total =colum * rows;
+		if (position > 1 && position < total) {
+			
+			if (position < posA  || position > posA ) {
+				
 				if (lm.positionSnake(position, let) == false) {
-					snakerPositionB(colum, rows, posA, let);
+					snakerPositionB(colum, rows, posA, let,value);
 				}
 			} else {
-				snakerPositionB(colum, rows, posA, let);
+				snakerPositionB(colum, rows, posA, let,value);
 			}
+		}else {
+			snakerPositionB(colum, rows, posA, let,value);
 		}
 
 	}

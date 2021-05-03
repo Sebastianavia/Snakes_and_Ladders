@@ -1,5 +1,6 @@
 package ui;
 
+
 import java.util.Scanner;
 
 import model.Game;
@@ -31,10 +32,24 @@ public class Menu {
 				int ladder = Integer.parseInt(parts[3]);
 				num4 = parts[4];
 				int players = num4.length();
-				int value = (snakes*2)+(ladder*2);
-				if(columns*rows>value) {
-				 System.out.println(game.printBoard(columns, rows) );
-
+				int value=0;
+				if(snakes == 0) {
+					 value =ladder*2;
+				}else if(ladder == 0) {
+				  value =snakes*2;
+				}else {
+					value = (snakes*2)+(ladder*2);
+				}
+				int valueTo =columns*rows;
+				
+				if(valueTo-2>=value) {
+					
+				 System.out.println( game.printBoard(columns, rows));
+				
+				
+				int n =   (int) (Math.random() * value) + 2;
+				 game.snakerPosition(columns,rows,snakes,n,value);
+				 System.out.println(game.printB() );
 					m(columns, rows, snakes, ladder, num4, players, 0, 'a');
 					System.out.println("Press enter to roll");// giving the user a chance to roll
 					scan.nextLine();// waiting for enter key
