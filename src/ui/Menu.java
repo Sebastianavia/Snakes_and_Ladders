@@ -9,12 +9,13 @@ public class Menu {
 	public final static String SPLIT = " ";
 	private Scanner scan = new Scanner(System.in);
 	private Game game;
-
+	
 	public Menu() {
 		game = new Game();
 	}
 
 	public void menu(String num) {
+		
 		if (num.equals("2") || num.equals("1")) {
 			System.out.println("********BIENVENIDO A SNAKE AND LADDERS********\n"
 					+ "********* Para iniciar selecione una opcion *********\n" + "** 1- Iniciar juego\n"
@@ -22,7 +23,7 @@ public class Menu {
 			System.out.println("");
 			num = scan.nextLine();
 			if (num.equals("1")) {
-				System.out.println("Ingrese los valores separados por");
+				System.out.println("Ingrese los valores separados por espacios");
 				System.out.println("");
 				String num4 = scan.nextLine();
 				String[] parts = num4.split(SPLIT);
@@ -42,13 +43,14 @@ public class Menu {
 				}
 				int valueTo =columns*rows;
 				
-				if(valueTo-2>=value) {
+				if(valueTo-4>=value) {
 					
 				 System.out.println( game.printBoard(columns, rows));
 				
 				
 				int n =   (int) (Math.random() * value) + 2;
-				 game.snakerPosition(columns,rows,snakes,n,value);
+				 game.snakerPosition(columns,rows,snakes,n,valueTo);
+				 game.laderPosition(columns,rows,ladder,n,valueTo);
 				 System.out.println(game.printB() );
 					m(columns, rows, snakes, ladder, num4, players, 0, 'a');
 					System.out.println("Press enter to roll");// giving the user a chance to roll
@@ -57,7 +59,7 @@ public class Menu {
 					// System.out.println(game.printBoard(rows,columns,1,1,(rows*columns), ""));
 					// game.printBoard(rows,columns,1,1,(rows*columns), "",1,"");
 				}else {
-					System.out.println("\nEl numero de serpientes y escalera es superior al numero de celdas\n");
+					System.out.println("\nEl numero de serpientes y escalera es superior al numero de celdas o causa conflicto\n");
 					menu(num);
 				}
 				if (num.equals("2")) {

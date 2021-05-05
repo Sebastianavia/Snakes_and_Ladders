@@ -11,12 +11,17 @@ public class Game {
 	Scanner scanner = new Scanner(System.in);
 	private int positionA;
 	private int positionB;
+	private int positionALadder;
+	private int positionBLadder;
 	public final static String snakes = "ABCDEFGHIJKLMÑOPQRSTW";
+	public final static String laders = "0123456789";
 	private Board lm;
 
 	public Game() {
 		positionA = 0;
 		positionB = 1;
+		positionALadder =0;
+		positionBLadder = 1;
 	}
 
 	public String printBoard(int col, int row) {
@@ -114,10 +119,31 @@ public class Game {
 					numSnackers--;
 					positionA++;
 					positionB++;
-					System.out.println("antes de asignar "+ position);
+					// tomar el valor de getpos, luego restarlo con num colum 
+					//()()()()()   restar una posicion de la multiplicacion de las columnas por el numero que sale de las veces que esta 	
+					//()()()()()	columnas en el numero 
+					//()()()()()
+					//System.out.println("antes de asignar "+ position);
+					
+					//float value1 = (float) (9.0/2.0);
+					//System.out.println(value1 + "asas ");
+					//int ou = (int) Math.round(value1);
+					//System.out.println("assa  "+ou + "division       as");
 					//position= position+colum;
-					System.out.println("valor que envio " +position);
-					snakerPositionB(colum, rows, position, let,value);
+					//System.out.println("valor que envio " +position);
+					int mul =1;
+					int val =foundPostition(position, colum, mul);
+					int positionMax = val*colum;
+					int positionMin=0;
+					if(val >1) {
+						val = val-1;
+						 positionMin = colum*val;
+					}else {
+						 positionMin=1;
+					}
+					//System.out.println("valor superior "+positionMax);
+					//System.out.println("valor menor "+ positionMin);
+					snakerPositionB(colum, rows, position, let,value,positionMax,positionMin);
 					
 					rand = (int) (Math.random() * value) + 2;
 					snakerPosition(colum, rows, numSnackers,rand,value);
@@ -130,25 +156,134 @@ public class Game {
 		}
 
 	}
+	public int foundPostition(int position,int col,int value) {
+		int num= col*value;
+	if(num<position) {
+		value++;
+		value= foundPostition(position, col, value);
+	}
+		return value;
+	}
 
-	public void snakerPositionB(int colum, int rows, int posA, String let,int value) {
-		
-		
-		int position = (int) (Math.random() * value) + 2;
-		int posB=colum+posA;
+	public void snakerPositionB(int colum, int rows, int posA, String let,int value,int positionMax,int positionMin) {	
+		int position = (int) (Math.random() * value) + 2;		
 		int total =colum * rows;
 		if (position > 1 && position < total) {
+			//System.out.println(value + "valor");
+			//System.out.println(position+"  posicion");
 			
-			if (position < posA  || position > posA ) {
+			if (position < positionMin  || position > positionMax ) {
 				
 				if (lm.positionSnake(position, let) == false) {
-					snakerPositionB(colum, rows, posA, let,value);
+					snakerPositionB(colum, rows, posA, let,value,positionMax,positionMin);
 				}
 			} else {
-				snakerPositionB(colum, rows, posA, let,value);
+				snakerPositionB(colum, rows, posA, let,value,positionMax,positionMin);
 			}
 		}else {
-			snakerPositionB(colum, rows, posA, let,value);
+			snakerPositionB(colum, rows, posA, let,value,positionMax,positionMin);
+		}
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public void laderPosition(int colum, int rows, int numSnackers,int rand,int value) {
+		System.out.println(numSnackers);
+		if (numSnackers > 0) {
+			
+			//int numCol = (int) Math.floor(Math.random() * (1 - colum) + colum);
+			//int numRow = (int) Math.floor(Math.random() * (1 - rows) + rows);
+			int position = rand;
+			int total =colum * rows;
+			if (position > 1 && position < total) {
+			
+				String let = laders.substring(positionALadder, positionBLadder);
+				if (lm.positionSnake(position, let) == false) {
+					
+					
+					rand =  (int) (Math.random() * value) + 2;
+					laderPosition(colum, rows, numSnackers,rand,value);
+				} else {
+					numSnackers--;
+					positionALadder++;
+					positionBLadder++;
+					// tomar el valor de getpos, luego restarlo con num colum 
+					//()()()()()   restar una posicion de la multiplicacion de las columnas por el numero que sale de las veces que esta 	
+					//()()()()()	columnas en el numero 
+					//()()()()()
+					//System.out.println("antes de asignar "+ position);
+					
+					//float value1 = (float) (9.0/2.0);
+					//System.out.println(value1 + "asas ");
+					//int ou = (int) Math.round(value1);
+					//System.out.println("assa  "+ou + "division       as");
+					//position= position+colum;
+					//System.out.println("valor que envio " +position);
+					int mul =1;
+					int val =foundPostition(position, colum, mul);
+					int positionMax = val*colum;
+					int positionMin=0;
+					if(val >1) {
+						val = val-1;
+						 positionMin = colum*val;
+					}else {
+						 positionMin=1;
+					}
+					//System.out.println("valor superior "+positionMax);
+					//System.out.println("valor menor "+ positionMin);
+					laderPositionB(colum, rows, position, let,value,positionMax,positionMin);
+					
+					rand = (int) (Math.random() * value) + 2;
+					laderPosition(colum, rows, numSnackers,rand,value);
+				}
+			}else {
+				
+				rand = (int) (Math.random() * value) + 2;
+				laderPosition(colum, rows, numSnackers,rand,value);
+			}
+		}
+
+	}
+
+	public void laderPositionB(int colum, int rows, int posA, String let,int value,int positionMax,int positionMin) {	
+		int position = (int) (Math.random() * value) + 2;		
+		int total =colum * rows;
+		if (position > 1 && position < total) {
+			//System.out.println(value + "valor");
+			//System.out.println(position+"  posicion");
+			
+			if (position < positionMin  || position > positionMax ) {
+				
+				if (lm.positionSnake(position, let) == false) {
+					laderPositionB(colum, rows, posA, let,value,positionMax,positionMin);
+				}
+			} else {
+				laderPositionB(colum, rows, posA, let,value,positionMax,positionMin);
+			}
+		}else {
+			laderPositionB(colum, rows, posA, let,value,positionMax,positionMin);
 		}
 
 	}
