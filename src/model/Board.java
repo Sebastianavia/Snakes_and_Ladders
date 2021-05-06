@@ -6,17 +6,17 @@ public class Board {
 	private int numCols;
 	private int max;
 
-	public Board(int n, int m) {
+	public Board(int n, int m, String players) {
 		setNumRows(n);
 		numCols = m;
 		max = n * m;
-		createMatrix();
+		createMatrix(players);
 	}
 
-	public void createMatrix() {
+	public void createMatrix(String players) {
 		// System.out.println("vamos a crear la matrix");
 		first = new Node(1);
-
+		first.setPlayers(players);
 		// System.out.println("se crea el first");
 		createdBoard(first, 1);
 
@@ -25,6 +25,12 @@ public class Board {
 	public String prePrint() {
 		String out2 = "";
 		String out = printBoard(out2, first, 1, 1, 0);
+		return out;
+	}
+
+	public String prePrint2() {
+		String out2 = "";
+		String out = printBoard2(out2, first, 1, 1, 0);
 		return out;
 	}
 
@@ -161,22 +167,194 @@ public class Board {
 	}
 
 	private boolean positionSnake(Node first2, int position, String let) {
-		
+
 		boolean out = false;
 		if (first2.getPos() == position) {
-			
-			if (first2.getSnakeColum().equals(" ")) {
-				
-				first2.setSnakeColum(let);
-				
-				out = true;
+
+			if (first2.getSnake().equals(" ")) {
+				if (first2.getLader().equals(" ")) {
+					first2.setSnake(let);
+
+					out = true;
+				}
 			}
 
 		} else {
-			
-			out=positionSnake(first2.getNext(), position, let);
+
+			out = positionSnake(first2.getNext(), position, let);
 		}
-	
+
+		return out;
+	}
+
+	public String printBoard2(String out, Node first2, int num, int num2, int num3) {
+		if (num3 < max - 2) {
+			num3++;
+			if (num2 == 1) {
+				String out3 = "";
+				String out2 = recordNext2(first2, num, out3);
+				out = out2 + "\n" + out;
+				num2 = 2;
+				first2 = recordNode(first2, 1, out);
+				if (first2 != null) {
+					out = printBoard2(out, first2, num, num2, num3);
+				}
+			} else {
+				String out3 = "";
+				String out2 = recordPrev2(first2, num, out3);
+				out = out2 + "\n" + out;
+				num2 = 1;
+				first2 = recordNode(first2, 1, out);
+				if (first2 != null) {
+					out = printBoard2(out, first2, num, num2, num3);
+				}
+			}
+		}
+		return out;
+	}
+
+	public String recordNext2(Node first2, int num2, String out) {
+		if (num2 <= numCols) {
+			out = out + " " + first2.toString2();
+			first2 = first2.getNext();
+			num2++;
+			out = recordNext2(first2, num2, out);
+		}
+
+		return out;
+	}
+
+	public String recordPrev2(Node first2, int num2, String out) {
+		if (num2 <= numCols) {
+			out = first2.toString2() + " " + out;
+			num2++;
+			out = recordPrev2(first2.getNext(), num2, out);
+		}
+		return out;
+	}
+
+	public boolean foundPlayer(String symbol, int position) {
+		boolean out1 =false;
+		boolean out = movePlayer(foundPlayer(first, symbol, position), position, symbol, out1);
+		System.out.println(out + "hhh");
+		return out;
+	}
+
+	private Node foundPlayer(Node node, String symbol, int position) {
+		if (node.getPos() + position <= max) {
+			if (node.getPlayers().indexOf(symbol) != -1) {
+				String player = node.getPlayers();
+				player = player.replace(symbol, "");
+				node.setPlayers(player);
+			} else {
+				node = foundPlayer(node.getNext(), symbol, position);
+			}
+		}
+		return node;
+	}
+
+	private boolean movePlayer(Node node, int position, String symbol, boolean out) {
+
+		if (node.getPos() + position <= max) {
+			if (position >= 1) {
+				if (node.getNext() != null) {
+					//System.out.println("entra");
+					if (node.getNext().getPos() == max) {
+						System.out.println("llego al final");
+						out= true;
+					}
+					position--;
+					//if(position>=1) {
+					//out =
+					movePlayer(node.getNext(), position, symbol, out);
+					//}
+				}
+			} else {
+				if (node.getPos() == max) {
+					out= true;
+				}
+				if (node.getSnake() != " ") {
+					System.out.println("entra a snake "+ node.getSnake() +" lo quue dice");
+					if(foundSnake(node.getPrev(), node.getSnake(),symbol)==false) {
+						System.out.println("falso");
+						String player = node.getPlayers();
+						node.setPlayers(symbol + player);
+					}
+				} else {
+					if (node.getLader() != " ") {
+						System.out.println("entra a lader "+ node.getLader() +"  lo que dice " );
+						if(foundLader(node.getNext(), node.getLader(),symbol)==false) {
+							System.out.println("falso lader");
+							String player = node.getPlayers();
+							node.setPlayers(symbol + player);
+							
+						}
+					} else {
+						String player = node.getPlayers();
+						node.setPlayers(symbol + player);
+					}
+				}
+			}
+
+		}
+		return out;
+	}
+
+	public boolean positionLader(int position, String let) {
+		boolean out = positionLader(first.getNext(), position, let);
+		return out;
+	}
+
+	private boolean positionLader(Node first2, int position, String let) {
+
+		boolean out = false;
+		if (first2.getPos() == position) {
+
+			if (first2.getLader().equals(" ")) {
+				if (first2.getSnake().equals(" ")) {
+					first2.setLader(let);
+
+					out = true;
+				}
+			}
+
+		} else {
+
+			out = positionLader(first2.getNext(), position, let);
+		}
+
+		return out;
+	}
+
+	// metodo para recorrer hacia adelante en busqueda de escalera
+	public boolean foundLader(Node first2, String let,String symbol) {
+		boolean out = false;
+		if (first2.getLader().equals(let)) {
+			System.out.println("entra a found lader");
+			String lader = first2.getPlayers();
+			first2.setPlayers(symbol + lader);
+			out = true;
+		} else {
+			if (first2.getPrev() != null) {
+				out = foundLader(first2.getNext(), let,symbol);
+			}
+		}
+		return out;
+	}
+
+	// metodo para recorrer hacia atras en busqueda de la serpiente
+	public boolean foundSnake(Node first2, String let,String symbol) {
+		boolean out = false;
+		if (first2.getSnake().equals(let)) {
+			System.out.println("entra a found snaker");
+			String lader = first2.getPlayers();
+			first2.setPlayers(symbol + lader);
+			out = true;
+		} else {
+			if (first2.getPrev() != null) {
+				out = foundSnake(first2.getPrev(), let,symbol);
+			}
+		}
 		return out;
 	}
 }
