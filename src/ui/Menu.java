@@ -16,7 +16,7 @@ public class Menu {
 		movement = 0;
 	}
 
-	public void menu(String num) {
+	public void menu(String num) throws InterruptedException {
 
 		if (num.equals("2") || num.equals("1")) {
 			System.out.println("********BIENVENIDO A SNAKE AND LADDERS********\n"
@@ -71,57 +71,74 @@ public class Menu {
 			menu(num);
 		} else {
 			if (num.equals("3")) {
-				System.out.println(":v");
+				System.out.println("fINALIZO EL JUEGO");
 
 			}
 		}
 	}
 
 	private void m(int columns, int rows, int snakes, int ladder, String num4, int players, int ini, char ch,
-			boolean win) {
+			boolean win) throws InterruptedException {
 		String player = "";
 		if (ini == 0) {
 			player = game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch);
 			System.out.println(
 					game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch) + "jugador N°" + (ini + 1));
 			System.out.println("Enter para tirar dados");// giving the user a chance to roll
-			String read =scan.nextLine();// waiting for enter key
-			int numMoves = game.rollDice();	
-			System.out.println(numMoves + "<= resultado dado");
-			// game.movePlayer(game.playSnake(columns, rows, snakes, ladder, num4, players,
-			// ini, ch), numMoves);
-			movement++;
-			if (game.movePlayer(game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch),
-					numMoves) == true) {
-				System.out.println("gano");
-				win = true;
-				System.out.println(game.printValue());
+			String read = scan.nextLine();// waiting for enter key
+			if (read.equalsIgnoreCase("menu")) {
+				menu("1");
 			} else {
-				System.out.println(game.printValue());
-				ini++;
+				if (read.equalsIgnoreCase("simul")) {
+					menuAuto(columns, rows, snakes, ladder, num4, players, ini, ch, win);
+				} else {
+					int numMoves = game.rollDice();
+					System.out.println(numMoves + "<= resultado dado");
+					// game.movePlayer(game.playSnake(columns, rows, snakes, ladder, num4, players,
+					// ini, ch), numMoves);
+					movement++;
+					if (game.movePlayer(game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch),
+							numMoves) == true) {
+						System.out.println("****  GANASTE  ****");
+						win = true;
+						System.out.println(game.printValue());
+					} else {
+						System.out.println(game.printValue());
+						if (players > 1) {
+							ini++;
+						}
+					}
+				}
 			}
 		} else {
 			player = game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch);
 			System.out.println(
-
 					game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch) + "jugador N°" + (ini + 1));
-
 			System.out.println("Enter para tirar dados");// giving the user a chance to roll
-			scan.nextLine();// waiting for enter key
-			int numMoves = game.rollDice();
-			System.out.println(numMoves + "<= resultado dado");
-			if (game.movePlayer(game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch),
-					numMoves) == true) {
-				
-				win = true;
-				System.out.println("****  GANASTE  ****");
-				System.out.println(game.printValue());
+			String read = scan.nextLine();// waiting for enter key
+			if (read.equalsIgnoreCase("menu")) {
+				menu("1");
 			} else {
-				System.out.println(game.printValue());
-				ini++;
-				if (ini == players) {
-					ini = 0;
+				if (read.equalsIgnoreCase("simul")) {
+				menuAuto(columns, rows, snakes, ladder, num4, players, ini, ch, win);
+				} else {
+					int numMoves = game.rollDice();
+					System.out.println(numMoves + "<= resultado dado");
+					if (game.movePlayer(game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch),
+							numMoves) == true) {
 
+						win = true;
+						System.out.println("****  GANASTE  ****");
+						System.out.println(game.printValue());
+					} else {
+						System.out.println(game.printValue());
+						ini++;
+						if (ini == players) {
+							ini = 0;
+
+						}
+
+					}
 				}
 			}
 		}
@@ -141,8 +158,9 @@ public class Menu {
 	}
 
 	public void printThree() {
-		System.out.println(game.printOrder());
+		game.printOrder();
 	}
+
 	private void menuAuto(int columns, int rows, int snakes, int ladder, String num4, int players, int ini, char ch,
 			boolean win) throws InterruptedException {
 		String player = "";
@@ -158,12 +176,14 @@ public class Menu {
 			movement++;
 			if (game.movePlayer(game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch),
 					numMoves) == true) {
-				System.out.println("gano");
+				System.out.println("***** GANASTE *****");
 				win = true;
 				System.out.println(game.printValue());
 			} else {
 				System.out.println(game.printValue());
-				ini++;
+				if (players > 1) {
+					ini++;
+				}
 			}
 		} else {
 			player = game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch);
@@ -176,9 +196,9 @@ public class Menu {
 			System.out.println(numMoves + "<= resultado dado");
 			if (game.movePlayer(game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch),
 					numMoves) == true) {
-				System.out.println("faaa");
+
 				win = true;
-				System.out.println("gano");
+				System.out.println("***** GANASTE *****");
 				System.out.println(game.printValue());
 			} else {
 				System.out.println(game.printValue());
