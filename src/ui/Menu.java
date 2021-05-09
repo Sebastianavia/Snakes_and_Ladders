@@ -70,7 +70,7 @@ public class Menu {
 			menu(num);
 		} else {
 			if (num.equals("3")) {
-				System.out.println(":v");
+				System.out.println("Finalizó el programa");
 
 			}
 		}
