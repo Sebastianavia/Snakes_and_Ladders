@@ -1,6 +1,7 @@
 package ui;
 
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import model.Game;
 
@@ -84,8 +85,8 @@ public class Menu {
 			System.out.println(
 					game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch) + "jugador N°" + (ini + 1));
 			System.out.println("Enter para tirar dados");// giving the user a chance to roll
-			scan.nextLine();// waiting for enter key
-			int numMoves = game.rollDice();
+			String read =scan.nextLine();// waiting for enter key
+			int numMoves = game.rollDice();	
 			System.out.println(numMoves + "<= resultado dado");
 			// game.movePlayer(game.playSnake(columns, rows, snakes, ladder, num4, players,
 			// ini, ch), numMoves);
@@ -111,9 +112,9 @@ public class Menu {
 			System.out.println(numMoves + "<= resultado dado");
 			if (game.movePlayer(game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch),
 					numMoves) == true) {
-				System.out.println("faaa");
+				
 				win = true;
-				System.out.println("gano");
+				System.out.println("****  GANASTE  ****");
 				System.out.println(game.printValue());
 			} else {
 				System.out.println(game.printValue());
@@ -134,12 +135,64 @@ public class Menu {
 	public void registerPlaye(String player) {
 		System.out.println("Digite el Nombre del jugador");
 		String name = scan.nextLine();
-		game.addPlayer(name, player, movement);
+		int out = movement;
+		movement = 0;
+		game.addPlayer(name, player, out);
 	}
 
 	public void printThree() {
-		System.out.println("hol");
 		System.out.println(game.printOrder());
 	}
+	private void menuAuto(int columns, int rows, int snakes, int ladder, String num4, int players, int ini, char ch,
+			boolean win) throws InterruptedException {
+		String player = "";
+		if (ini == 0) {
+			player = game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch);
+			System.out.println(
+					game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch) + "jugador N°" + (ini + 1));
+			TimeUnit.SECONDS.sleep(2);
+			int numMoves = game.rollDice();
+			System.out.println(numMoves + "<= resultado dado");
+			// game.movePlayer(game.playSnake(columns, rows, snakes, ladder, num4, players,
+			// ini, ch), numMoves);
+			movement++;
+			if (game.movePlayer(game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch),
+					numMoves) == true) {
+				System.out.println("gano");
+				win = true;
+				System.out.println(game.printValue());
+			} else {
+				System.out.println(game.printValue());
+				ini++;
+			}
+		} else {
+			player = game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch);
+			System.out.println(
 
+					game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch) + "jugador N°" + (ini + 1));
+
+			TimeUnit.SECONDS.sleep(2);
+			int numMoves = game.rollDice();
+			System.out.println(numMoves + "<= resultado dado");
+			if (game.movePlayer(game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch),
+					numMoves) == true) {
+				System.out.println("faaa");
+				win = true;
+				System.out.println("gano");
+				System.out.println(game.printValue());
+			} else {
+				System.out.println(game.printValue());
+				ini++;
+				if (ini == players) {
+					ini = 0;
+
+				}
+			}
+		}
+		if (win == false) {
+			menuAuto(columns, rows, snakes, ladder, num4, players, ini, ch, win);
+		} else {
+			registerPlaye(player);
+		}
+	}
 }

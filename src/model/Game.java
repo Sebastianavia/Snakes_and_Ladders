@@ -245,7 +245,7 @@ public class Game {
 
 	private void addPlayer(Players player1, Players newPlayer) {
 
-		if (newPlayer.getScore() <= player1.getScore()) {
+		if (newPlayer.getScore() >= player1.getScore()) {
 			if (player1.getLeft() == null) {
 
 				player1.setLeft(newPlayer);
@@ -273,7 +273,7 @@ public class Game {
 		if (player1 != null) {
 
 			inOrden(player1.getLeft(), out);
-
+			System.out.println(player1.data());
 			inOrden(player1.getRight(), out);
 
 		}

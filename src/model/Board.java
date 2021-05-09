@@ -4,11 +4,15 @@ public class Board {
 	private Node first;
 	private int numRows;
 	private int numCols;
+	private int snakers;
+	private int laders;
 	private int max;
 
 	public Board(int n, int m, String players) {
 		setNumRows(n);
 		numCols = m;
+		setSnakers(0);
+		setLaders(0);
 		max = n * m;
 		createMatrix(players);
 	}
@@ -207,7 +211,7 @@ public class Board {
 				if (node.getNext() != null) {
 				
 					if (node.getNext().getPos() == max) {
-						System.out.println("llego al final");
+						
 						
 						out= true;
 					}
@@ -303,5 +307,21 @@ public class Board {
 			}
 		}
 		return out;
+	}
+
+	public int getSnakers() {
+		return snakers;
+	}
+
+	public void setSnakers(int snakers) {
+		this.snakers = snakers;
+	}
+
+	public int getLaders() {
+		return laders;
+	}
+
+	public void setLaders(int laders) {
+		this.laders = laders;
 	}
 }
