@@ -14,10 +14,10 @@ public class Board {
 	}
 
 	public void createMatrix(String players) {
-		// System.out.println("vamos a crear la matrix");
+	
 		first = new Node(1);
 		first.setPlayers(players);
-		// System.out.println("se crea el first");
+		
 		createdBoard(first, 1);
 
 	}
@@ -34,59 +34,7 @@ public class Board {
 		return out;
 	}
 
-	/*
-	 * private void createRow(int i, int j, Node firstRow) {
-	 * //System.out.println("en creatRow con la fila " + i);
-	 * createCol(i,j+1,firstRow,firstRow.getUp() ); if(i+1<numRows) { Node
-	 * downFirstRow = new Node(i+1,j); downFirstRow.setUp(firstRow);
-	 * firstRow.setDown(downFirstRow); createRow(i+1, j, downFirstRow); }
-	 * 
-	 * }
-	 * 
-	 * private void createCol(int i, int j, Node prev,Node rowPrev) { if(j<numCols)
-	 * { //System.out.println("en createCol con la columna "+j); Node current = new
-	 * Node(i,j); current.setPrev(prev); prev.setNext(current); if(rowPrev!= null) {
-	 * rowPrev = rowPrev.getNext(); current.setUp(rowPrev);
-	 * rowPrev.setDown(current);
-	 * 
-	 * }
-	 * 
-	 * createCol(i,j+1,current,rowPrev); }
-	 * 
-	 * } public String toString() { String msg; msg=toStringRow(first); return msg;
-	 * 
-	 * }
-	 * 
-	 * private String toStringRow(Node firstRow) { String msg=""; if(firstRow!=null)
-	 * { msg = toStringCol(firstRow)+"\n"; msg+= toStringRow(firstRow.getDown()); }
-	 * return msg; }
-	 * 
-	 * private String toStringCol(Node current) { String msg=""; if(current!=null) {
-	 * msg = current.toString(); msg+= toStringCol(current.getNext()); } return msg;
-	 * }
-	 * 
-	 * public String imprimir() {
-	 * 
-	 * String out="" ; int i =1; out=nextCol(nodo(first),i); return out; } private
-	 * Node nodo(Node first2) {
-	 * 
-	 * if(first2.getDown()!=null) {
-	 * 
-	 * first2 =nodo(first2.getDown()); }
-	 * 
-	 * return first2; } private String nextCol(Node first2,int i) { String out="";
-	 * 
-	 * if(first2.getNext()!= null) { first2.setPos(i++); out=
-	 * "["+first2.getPos()+"]"; out+=nextCol(first2.getNext(),i++);
-	 * 
-	 * }if(first2.getUp()== null) { first2.setPos(i++); out=
-	 * "["+first2.getPos()+"]"; out+=nextCol(first2.getNext(),i++);
-	 * System.out.println("entro");
-	 * 
-	 * }
-	 * 
-	 * return out; }
-	 */
+	
 	private Node createdBoard(Node first1, int i) {
 		if (i < max) {
 			i++;
@@ -236,7 +184,6 @@ public class Board {
 	public boolean foundPlayer(String symbol, int position) {
 		boolean out1 =false;
 		boolean out = movePlayer(foundPlayer(first, symbol, position), position, symbol, out1);
-		System.out.println(out + "hhh");
 		return out;
 	}
 
@@ -258,33 +205,33 @@ public class Board {
 		if (node.getPos() + position <= max) {
 			if (position >= 1) {
 				if (node.getNext() != null) {
-					//System.out.println("entra");
+				
 					if (node.getNext().getPos() == max) {
 						System.out.println("llego al final");
+						
 						out= true;
 					}
 					position--;
-					//if(position>=1) {
-					//out =
-					movePlayer(node.getNext(), position, symbol, out);
-					//}
+					
+					out =movePlayer(node.getNext(), position, symbol, out);
+					
 				}
 			} else {
 				if (node.getPos() == max) {
 					out= true;
 				}
 				if (node.getSnake() != " ") {
-					System.out.println("entra a snake "+ node.getSnake() +" lo quue dice");
+					
 					if(foundSnake(node.getPrev(), node.getSnake(),symbol)==false) {
-						System.out.println("falso");
+						
 						String player = node.getPlayers();
 						node.setPlayers(symbol + player);
 					}
 				} else {
 					if (node.getLader() != " ") {
-						System.out.println("entra a lader "+ node.getLader() +"  lo que dice " );
+						
 						if(foundLader(node.getNext(), node.getLader(),symbol)==false) {
-							System.out.println("falso lader");
+							
 							String player = node.getPlayers();
 							node.setPlayers(symbol + player);
 							
@@ -330,12 +277,12 @@ public class Board {
 	public boolean foundLader(Node first2, String let,String symbol) {
 		boolean out = false;
 		if (first2.getLader().equals(let)) {
-			System.out.println("entra a found lader");
+			
 			String lader = first2.getPlayers();
 			first2.setPlayers(symbol + lader);
 			out = true;
 		} else {
-			if (first2.getPrev() != null) {
+			if (first2.getNext() != null) {
 				out = foundLader(first2.getNext(), let,symbol);
 			}
 		}
@@ -346,7 +293,7 @@ public class Board {
 	public boolean foundSnake(Node first2, String let,String symbol) {
 		boolean out = false;
 		if (first2.getSnake().equals(let)) {
-			System.out.println("entra a found snaker");
+			
 			String lader = first2.getPlayers();
 			first2.setPlayers(symbol + lader);
 			out = true;

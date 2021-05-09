@@ -10,6 +10,7 @@ public class Game {
 	Scanner scanner = new Scanner(System.in);
 	private int positionA;
 	private int positionB;
+	private Players players;
 	private int positionALadder;
 	private int positionBLadder;
 	public final static String laders = "ABCDEFGHIJKLMÑOPQRSTW";
@@ -53,10 +54,10 @@ public class Game {
 
 			if (ini == players) {
 				ini = 0;
-				
+
 			}
 		}
-		// playSnake(columns,rows,snakes,ladder,num4,players,ini,ch);
+
 		return out;
 	}
 
@@ -67,8 +68,6 @@ public class Game {
 		return num;
 	}
 
-
-
 	public void printBoard(int rows, int columns, int rows1, int colums1, int cuadros, String out, int count,
 			String out2) {
 		if (cuadros >= 1) {
@@ -78,9 +77,9 @@ public class Game {
 					colums1++;
 					out = " " + count + " ";
 					out2 = out2 + out;
-					// printBoard(rows,columns,rows1,colums1,cuadros,out);
+
 				} else {
-					// out2 = "\n "+count+" "+out2;
+
 					rows1++;
 					colums1 = 2;
 				}
@@ -89,7 +88,7 @@ public class Game {
 			cuadros--;
 			printBoard(rows, columns, rows1, colums1, cuadros, out, count, out2);
 		} else if (cuadros == 0) {
-			// System.out.println(out2);
+
 		}
 
 	}
@@ -99,11 +98,8 @@ public class Game {
 	}
 
 	public void snakerPosition(int colum, int rows, int numSnackers, int rand, int value) {
-		// System.out.println(numSnackers);
 		if (numSnackers > 0) {
 
-			// int numCol = (int) Math.floor(Math.random() * (1 - colum) + colum);
-			// int numRow = (int) Math.floor(Math.random() * (1 - rows) + rows);
 			int position = rand;
 			int total = colum * rows;
 			if (position > 1 && position < total) {
@@ -117,19 +113,7 @@ public class Game {
 					numSnackers--;
 					positionA++;
 					positionB++;
-					// tomar el valor de getpos, luego restarlo con num colum
-					// ()()()()() restar una posicion de la multiplicacion de las columnas por el
-					// numero que sale de las veces que esta
-					// ()()()()() columnas en el numero
-					// ()()()()()
-					// System.out.println("antes de asignar "+ position);
 
-					// float value1 = (float) (9.0/2.0);
-					// System.out.println(value1 + "asas ");
-					// int ou = (int) Math.round(value1);
-					// System.out.println("assa "+ou + "division as");
-					// position= position+colum;
-					// System.out.println("valor que envio " +position);
 					int mul = 1;
 					int val = foundPostition(position, colum, mul);
 					int positionMax = val * colum;
@@ -140,8 +124,7 @@ public class Game {
 					} else {
 						positionMin = 1;
 					}
-					// System.out.println("valor superior "+positionMax);
-					// System.out.println("valor menor "+ positionMin);
+
 					snakerPositionB(colum, rows, position, let, value, positionMax, positionMin);
 
 					rand = (int) (Math.random() * value) + 2;
@@ -170,9 +153,6 @@ public class Game {
 		int position = (int) (Math.random() * value) + 2;
 		int total = colum * rows;
 		if (position > 1 && position < total) {
-			// System.out.println(value + "valor");
-			// System.out.println(position+" posicion");
-
 			if (position < positionMin || position > positionMax) {
 
 				if (lm.positionSnake(position, let) == false) {
@@ -188,11 +168,8 @@ public class Game {
 	}
 
 	public void laderPosition(int colum, int rows, int numSnackers, int rand, int value) {
-		// System.out.println(numSnackers);
 		if (numSnackers > 0) {
 
-			// int numCol = (int) Math.floor(Math.random() * (1 - colum) + colum);
-			// int numRow = (int) Math.floor(Math.random() * (1 - rows) + rows);
 			int position = rand;
 			int total = colum * rows;
 			if (position > 1 && position < total) {
@@ -206,19 +183,6 @@ public class Game {
 					numSnackers--;
 					positionALadder++;
 					positionBLadder++;
-					// tomar el valor de getpos, luego restarlo con num colum
-					// ()()()()() restar una posicion de la multiplicacion de las columnas por el
-					// numero que sale de las veces que esta
-					// ()()()()() columnas en el numero
-					// ()()()()()
-					// System.out.println("antes de asignar "+ position);
-
-					// float value1 = (float) (9.0/2.0);
-					// System.out.println(value1 + "asas ");
-					// int ou = (int) Math.round(value1);
-					// System.out.println("assa "+ou + "division as");
-					// position= position+colum;
-					// System.out.println("valor que envio " +position);
 					int mul = 1;
 					int val = foundPostition(position, colum, mul);
 					int positionMax = val * colum;
@@ -229,8 +193,7 @@ public class Game {
 					} else {
 						positionMin = 1;
 					}
-					// System.out.println("valor superior "+positionMax);
-					// System.out.println("valor menor "+ positionMin);
+
 					laderPositionB(colum, rows, position, let, value, positionMax, positionMin);
 
 					rand = (int) (Math.random() * value) + 2;
@@ -249,8 +212,6 @@ public class Game {
 		int position = (int) (Math.random() * value) + 2;
 		int total = colum * rows;
 		if (position > 1 && position < total) {
-			// System.out.println(value + "valor");
-			// System.out.println(position+" posicion");
 
 			if (position < positionMin || position > positionMax) {
 
@@ -269,5 +230,53 @@ public class Game {
 	public boolean movePlayer(String symbol, int position) {
 		return lm.foundPlayer(symbol, position);
 
+	}
+
+	public void addPlayer(String name, String symbol, int score) {
+		Players player = new Players(name, symbol, score);
+		if (players == null) {
+
+			players = player;
+		} else {
+			addPlayer(players, player);
+		}
+
+	}
+
+	private void addPlayer(Players player1, Players newPlayer) {
+
+		if (newPlayer.getScore() <= player1.getScore()) {
+			if (player1.getLeft() == null) {
+
+				player1.setLeft(newPlayer);
+			} else {
+				addPlayer(player1, newPlayer);
+			}
+
+		} else {
+			if (player1.getRight() == null) {
+
+				player1.setRight(newPlayer);
+			} else {
+				addPlayer(player1.getRight(), newPlayer);
+			}
+		}
+	}
+
+	public String printOrder() {
+		String out = "";
+
+		return inOrden(players, out);
+	}
+
+	public String inOrden(Players player1, String out) {
+		if (player1 != null) {
+
+			inOrden(player1.getLeft(), out);
+
+			inOrden(player1.getRight(), out);
+
+		}
+		return out;
 	}
 }

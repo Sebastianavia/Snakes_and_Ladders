@@ -57,19 +57,16 @@ public class Menu {
 					boolean win = false;
 					m(columns, rows, snakes, ladder, num4, players, 0, 'a', win);
 
-					// System.out.println(game.printBoard(rows,columns,1,1,(rows*columns), ""));
-					// game.printBoard(rows,columns,1,1,(rows*columns), "",1,"");
 				} else {
 					System.out.println(
 							"\nEl numero de serpientes y escalera es superior al numero de celdas o causa conflicto\n");
 					menu(num);
 				}
-				if (num.equals("2")) {
-
-				}
 
 			}
-
+			if (num.equals("2")) {
+				printThree();
+			}
 			menu(num);
 		} else {
 			if (num.equals("3")) {
@@ -81,7 +78,9 @@ public class Menu {
 
 	private void m(int columns, int rows, int snakes, int ladder, String num4, int players, int ini, char ch,
 			boolean win) {
+		String player = "";
 		if (ini == 0) {
+			player = game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch);
 			System.out.println(
 					game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch) + "jugador N°" + (ini + 1));
 			System.out.println("Enter para tirar dados");// giving the user a chance to roll
@@ -101,7 +100,9 @@ public class Menu {
 				ini++;
 			}
 		} else {
+			player = game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch);
 			System.out.println(
+
 					game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch) + "jugador N°" + (ini + 1));
 
 			System.out.println("Enter para tirar dados");// giving the user a chance to roll
@@ -126,12 +127,19 @@ public class Menu {
 		if (win == false) {
 			m(columns, rows, snakes, ladder, num4, players, ini, ch, win);
 		} else {
-			System.out.println(movement);
+			registerPlaye(player);
 		}
 	}
 
-	public void registerPlaye() {
+	public void registerPlaye(String player) {
+		System.out.println("Digite el Nombre del jugador");
+		String name = scan.nextLine();
+		game.addPlayer(name, player, movement);
+	}
 
+	public void printThree() {
+		System.out.println("hol");
+		System.out.println(game.printOrder());
 	}
 
 }
