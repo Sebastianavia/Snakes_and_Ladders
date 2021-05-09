@@ -92,6 +92,11 @@ public class Menu {
 				if (read.equalsIgnoreCase("simul")) {
 					menuAuto(columns, rows, snakes, ladder, num4, players, ini, ch, win);
 				} else {
+					if (read.equalsIgnoreCase("num")) {
+						System.out.println(game.printB());
+						scan.nextLine();
+					}
+					
 					int numMoves = game.rollDice();
 					System.out.println(numMoves + "<= resultado dado");
 					// game.movePlayer(game.playSnake(columns, rows, snakes, ladder, num4, players,
@@ -120,8 +125,12 @@ public class Menu {
 				menu("1");
 			} else {
 				if (read.equalsIgnoreCase("simul")) {
-				menuAuto(columns, rows, snakes, ladder, num4, players, ini, ch, win);
+					menuAuto(columns, rows, snakes, ladder, num4, players, ini, ch, win);
 				} else {
+					if (read.equalsIgnoreCase("num")) {
+						System.out.println(game.printB());
+						scan.nextLine();
+					}
 					int numMoves = game.rollDice();
 					System.out.println(numMoves + "<= resultado dado");
 					if (game.movePlayer(game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch),
