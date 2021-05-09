@@ -6,6 +6,7 @@ public class Players {
 	private int score;
 	private Players left;
 	private Players right;
+	private String caracters;
 	public  Players(String n,String s,int sc) {
 		nickName = n;
 		symbol= s;
@@ -42,8 +43,14 @@ public class Players {
 		right = r;
 	}
 	public String data() {
-		String out =	nickName+" "+symbol+" "+score;
+		String out =	"Nombre: "+nickName+" Simbolos: "+symbol+" Puntaje: "+score+"\n"+caracters ;
 		return out;
 		
+	}
+	public String getCaracters() {
+		return caracters;
+	}
+	public void setCaracters(String caracters) {
+		this.caracters = caracters;
 	}
 }

@@ -8,14 +8,14 @@ public class Main {
 
 	}
 
-	public static void main(String args[]) {
+	public static void main(String args[]) throws InterruptedException {
 
 		Main m = new Main();
 		m.menu();
 
 	}
 
-	private void menu() {
+	private void menu() throws InterruptedException {
 
 		menu.menu("1");
 
