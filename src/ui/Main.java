@@ -1,5 +1,9 @@
 package ui;
-
+/**
+ * 
+ * @author Gianni Benavides, Sebastian Navia
+ *
+ */
 public class Main {
 	private Menu menu;
 

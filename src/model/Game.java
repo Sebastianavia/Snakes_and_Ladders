@@ -24,22 +24,53 @@ public class Game {
 		positionBLadder = 1;
 	}
 
+	/**
+	 * just the board <br>
+	 * <b> pre: the number of rows and columns </b>
+	 * @param col
+	 * @param row
+	 * @param players
+	 * @return
+	 */
 	public String printBoard(int col, int row, String players) {
 		lm = new Board(row, col, players);
 		String out = lm.prePrint();
 		return out;
 	}
+	
+	/**
+	 * full board <br>
+	 * <b> pre: all data </b>
+	 * @return
+	 */
 
 	public String printB() {
 		String out = lm.prePrint();
 		return out;
 	}
-
+	/**
+	 * // tablero con los valores  <br>
+	 * <b> pre: all data </b>
+	 * @return
+	 */
+	
 	public String printValue() {
 		String out = lm.prePrint2();
 		return out;
 	}
-
+	
+	/**
+	 * Start <br>
+	 * @param columns
+	 * @param rows
+	 * @param snakes
+	 * @param ladder
+	 * @param num4
+	 * @param players
+	 * @param ini
+	 * @param ch
+	 * @return out returns the string of characters, the symbol
+	 */
 	public String playSnake(int columns, int rows, int snakes, int ladder, String num4, int players, int ini, char ch) {
 		String out = "";
 		if (ini == 0) {
@@ -60,14 +91,32 @@ public class Game {
 
 		return out;
 	}
-
+	 
+	/**
+	 * generate a random number from 1 to 6 <br>
+	 * <b> pre: you need the library and the method to automatically generate </b>
+	 * @return num returns the number of the dice randomly
+	 */
 	public int rollDice() {
 		Random rand = new Random();
 		int num = rand.nextInt((6 - 1) + 1) + 1;
 
 		return num;
 	}
-
+	
+	/**
+	 * print the board <br>
+	 * <b> pre: rows and columns are needed  </b>
+	 * @param rows
+	 * @param columns
+	 * @param rows1
+	 * @param colums1
+	 * @param cuadros
+	 * @param out
+	 * @param count
+	 * @param out2
+	 */
+	
 	public void printBoard(int rows, int columns, int rows1, int colums1, int cuadros, String out, int count,
 			String out2) {
 		if (cuadros >= 1) {
@@ -96,7 +145,18 @@ public class Game {
 	public Board getLm() {
 		return lm;
 	}
-
+	
+	
+	
+	/**
+	 * the other part of the serpent's position <br>
+	 * <b> pre: empty boxes where they can be contained </b> 
+	 * @param colum
+	 * @param rows
+	 * @param numSnackers
+	 * @param rand
+	 * @param value
+	 */
 	public void snakerPosition(int colum, int rows, int numSnackers, int rand, int value) {
 		if (numSnackers > 0) {
 
@@ -138,7 +198,14 @@ public class Game {
 		}
 
 	}
-
+	/**
+	 * find the available position for a ladder or snake <br>
+	 * <b> pre:  </b>
+	 * @param position
+	 * @param col
+	 * @param value
+	 * @return
+	 */
 	public int foundPostition(int position, int col, int value) {
 		int num = col * value;
 		if (num < position) {
@@ -147,7 +214,18 @@ public class Game {
 		}
 		return value;
 	}
-
+	/**
+	 * snake position<br>
+	 * <b> pre:  </b>
+	 * @param colum
+	 * @param rows
+	 * @param posA
+	 * @param let
+	 * @param value
+	 * @param positionMax
+	 * @param positionMin
+	 */
+	
 	public void snakerPositionB(int colum, int rows, int posA, String let, int value, int positionMax,
 			int positionMin) {
 		int position = (int) (Math.random() * value) + 2;
@@ -167,6 +245,17 @@ public class Game {
 
 	}
 
+	
+	
+		/**
+		 * is the position of the ladders <br>
+		 * <b> pre: the board must be established </b>
+		 * @param colum
+		 * @param rows
+		 * @param numSnackers
+		 * @param rand
+		 * @param value
+		 */
 	public void laderPosition(int colum, int rows, int numSnackers, int rand, int value) {
 		if (numSnackers > 0) {
 
@@ -208,6 +297,18 @@ public class Game {
 
 	}
 
+	/**
+	 * is the position of the ladders <br>
+	 * <b> pre: the board must be established </b>
+	 * @param colum
+	 * @param rows
+	 * @param posA
+	 * @param let
+	 * @param value
+	 * @param positionMax
+	 * @param positionMin
+	 */
+	
 	public void laderPositionB(int colum, int rows, int posA, String let, int value, int positionMax, int positionMin) {
 		int position = (int) (Math.random() * value) + 2;
 		int total = colum * rows;
@@ -224,14 +325,24 @@ public class Game {
 		} else {
 			laderPositionB(colum, rows, posA, let, value, positionMax, positionMin);
 		}
-
+		
+		
+	
 	}
 
 	public boolean movePlayer(String symbol, int position) {
 		return lm.foundPlayer(symbol, position);
 
 	}
-
+	
+	
+	/**
+	 * add a new player <br>
+	 * <b> we need the player's data </b>
+	 * @param name player's name
+	 * @param symbol player´s symbol
+	 * @param score player´s score
+	 */
 	public void addPlayer(String name, String symbol, int score) {
 		Players player = new Players(name, symbol, score);
 		if (players == null) {
@@ -242,7 +353,12 @@ public class Game {
 		}
 
 	}
-
+	/**
+	 * add a new player <br>
+	 * <b> pre: we need to set the number of players </b>
+	 * @param player1 firts player 
+	 * @param newPlayer next player 
+	 */
 	private void addPlayer(Players player1, Players newPlayer) {
 
 		if (newPlayer.getScore() >= player1.getScore()) {
@@ -262,12 +378,27 @@ public class Game {
 			}
 		}
 	}
-
+	
+	
+	/**
+	 * is a character string <br>
+	 * @return returns the string to menu
+	 */
+	
 	public String printOrder() {
 		String out = "";
 
 		return inOrden(players, out);
 	}
+	
+	
+	/**
+	 * sort the players and cycle through the nodo <br>
+	 * <b> pre: create players </b>
+	 * @param player1
+	 * @param out
+	 * @return print player order, full nodo traversal
+	 */
 
 	public String inOrden(Players player1, String out) {
 		if (player1 != null) {		

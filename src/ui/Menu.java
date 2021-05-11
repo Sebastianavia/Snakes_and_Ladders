@@ -11,11 +11,17 @@ public class Menu {
 	private Game game;
 	private int movement;
 
+
 	public Menu() {
 		game = new Game();
 		movement = 0;
 	}
-
+	
+	/**
+	 * prints on screen the options to use the application, choose an option and activate the operation of each of the functions <br>
+	 * <b> pre: we need the user to choose what action to perform </b> 
+	 * @param num menu option
+	 */
 	public void menu(String num) throws InterruptedException {
 
 		if (num.equals("2") || num.equals("1")) {
@@ -77,6 +83,22 @@ public class Menu {
 		}
 	}
 
+	//_________________________________________________________________________
+	
+	/**
+	 * the game starts <br>
+	 * <b> pre: all data </b> 
+	 * @param columns  column number
+	 * @param rows  row number
+	 * @param snakes snake number
+	 * @param ladder ladder number
+	 * @param num4 
+	 * @param players players number
+	 * @param ini
+	 * @param ch
+	 * @param win the player who won the game
+	 * @throws InterruptedException
+	 */
 	private void m(int columns, int rows, int snakes, int ladder, String num4, int players, int ini, char ch,
 			boolean win) throws InterruptedException {
 		String player = "";
@@ -158,6 +180,12 @@ public class Menu {
 		}
 	}
 
+	//_______________________________________________________________________________________
+	/**
+	 * is in charge of registering the players<br>
+	 * <b> pre: we need user to register player name </b> 
+	 * @param player
+	 */
 	public void registerPlaye(String player) {
 		System.out.println("Digite el Nombre del jugador");
 		String name = scan.nextLine();
@@ -165,11 +193,30 @@ public class Menu {
 		movement = 0;
 		game.addPlayer(name, player, out);
 	}
-
+	//_______________________________________________________________________________________________
+	
+	
 	public void printThree() {
 		game.printOrder();
 	}
-
+	//______________________________________________________________________________________________
+	
+	
+	/**
+	 * so that it runs through it automatically <br>
+	 * <b> pre: you need the indicated command </b> 
+	 * @param columns  column number
+	 * @param rows  row number
+	 * @param snakes snake number
+	 * @param ladder ladder number
+	 * @param num4 
+	 * @param players players number
+	 * @param ini
+	 * @param ch
+	 * @param win the player who won the game
+	 * @throws InterruptedException
+	 */
+	//para q lo recorra automaticamente 
 	private void menuAuto(int columns, int rows, int snakes, int ladder, String num4, int players, int ini, char ch,
 			boolean win) throws InterruptedException {
 		String player = "";
@@ -224,4 +271,5 @@ public class Menu {
 			registerPlaye(player);
 		}
 	}
+	
 }
