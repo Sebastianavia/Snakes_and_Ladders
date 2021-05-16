@@ -143,7 +143,7 @@ public class Players {
 	 * @return a message showing all the information of the players
 	 */
 	public String data() {
-		String out =	"Nombre: "+nickName+" Simbolos: "+symbol+" Puntaje: "+score+"\n"+caracters ;
+		String out =	"Nombre: "+this.nickName+" Simbolos: "+symbol+" Puntaje: "+score+"\n"+caracters ;
 		return out;
 		
 	}

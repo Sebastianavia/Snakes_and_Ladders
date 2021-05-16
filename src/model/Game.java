@@ -340,8 +340,8 @@ public class Game {
 	 * add a new player <br>
 	 * <b> we need the player's data </b>
 	 * @param name player's name
-	 * @param symbol player´s symbol
-	 * @param score player´s score
+	 * @param symbol playerï¿½s symbol
+	 * @param score playerï¿½s score
 	 */
 	public void addPlayer(String name, String symbol, int score) {
 		Players player = new Players(name, symbol, score);
@@ -401,14 +401,16 @@ public class Game {
 	 */
 
 	public String inOrden(Players player1, String out) {
-		if (player1 != null) {		
+		if (player1 != null) {
+			out+=player1.data()+"\n";
 			inOrden(player1.getLeft(), out);
-			System.out.println(player1.data());
+			//System.out.println(player1.data());
 			inOrden(player1.getRight(), out);
 			
 			
 
 		}
+		
 		return out;
 	}
 }

@@ -197,7 +197,7 @@ public class Menu {
 	
 	
 	public void printThree() {
-		game.printOrder();
+		System.out.println(game.printOrder());
 	}
 	//______________________________________________________________________________________________
 	
