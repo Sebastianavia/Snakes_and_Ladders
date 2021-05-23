@@ -333,9 +333,13 @@ public class Menu {
 		getScore(playerN);
 	}
 	private void getScore(Players current) {
+		
 		if(current != null) {
+			
 			getScore(current.getLeft());
+			
 			System.out.println(current.getNickName()+" "+current.getScore());
+			
 			getScore(current.getRight());
 		}
 	}
