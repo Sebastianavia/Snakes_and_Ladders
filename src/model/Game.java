@@ -10,7 +10,6 @@ public class Game {
 	Scanner scanner = new Scanner(System.in);
 	private int positionA;
 	private int positionB;
-	private Players players;
 	private int positionALadder;
 	private int positionBLadder;
 	public final static String laders = "ABCDEFGHIJKLMÑOPQRSTW";
@@ -336,81 +335,4 @@ public class Game {
 	}
 	
 	
-	/**
-	 * add a new player <br>
-	 * <b> we need the player's data </b>
-	 * @param name player's name
-	 * @param symbol player�s symbol
-	 * @param score player�s score
-	 */
-	public void addPlayer(String name, String symbol, int score) {
-		Players player = new Players(name, symbol, score);
-		if (players == null) {
-
-			players = player;
-		} else {
-			addPlayer(players, player);
-		}
-
-	}
-	/**
-	 * add a new player <br>
-	 * <b> pre: we need to set the number of players </b>
-	 * @param player1 firts player 
-	 * @param newPlayer next player 
-	 */
-	private void addPlayer(Players player1, Players newPlayer) {
-
-		if (newPlayer.getScore() >= player1.getScore()) {
-			if (player1.getLeft() == null) {
-
-				player1.setLeft(newPlayer);
-			} else {
-				addPlayer(player1, newPlayer);
-			}
-
-		} else {
-			if (player1.getRight() == null) {
-
-				player1.setRight(newPlayer);
-			} else {
-				addPlayer(player1.getRight(), newPlayer);
-			}
-		}
-	}
-	
-	
-	/**
-	 * is a character string <br>
-	 * @return returns the string to menu
-	 */
-	
-	public String printOrder() {
-		String out = "";
-
-		return inOrden(players, out);
-	}
-	
-	
-	/**
-	 * sort the players and cycle through the nodo <br>
-	 * <b> pre: create players </b>
-	 * @param player1
-	 * @param out
-	 * @return print player order, full nodo traversal
-	 */
-
-	public String inOrden(Players player1, String out) {
-		if (player1 != null) {
-			out+=player1.data()+"\n";
-			inOrden(player1.getLeft(), out);
-			//System.out.println(player1.data());
-			inOrden(player1.getRight(), out);
-			
-			
-
-		}
-		
-		return out;
-	}
 }

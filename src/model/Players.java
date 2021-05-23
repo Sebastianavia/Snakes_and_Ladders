@@ -1,7 +1,12 @@
 package model;
 
+import java.io.Serializable;
 
-public class Players {
+public class Players implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String nickName;
 	private String symbol;
 	private int score;

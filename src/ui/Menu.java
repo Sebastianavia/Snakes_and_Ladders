@@ -1,28 +1,42 @@
 package ui;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import model.Game;
+import model.Players;
 
 public class Menu {
+	private final static String SAVE_PLAYER = "src/data/player.txt";
 	public final static String SPLIT = " ";
 	private Scanner scan = new Scanner(System.in);
 	private Game game;
 	private int movement;
-
-
+	private Players playerN;
+	
 	public Menu() {
 		game = new Game();
 		movement = 0;
 	}
-	
+
 	/**
-	 * prints on screen the options to use the application, choose an option and activate the operation of each of the functions <br>
-	 * <b> pre: we need the user to choose what action to perform </b> 
+	 * prints on screen the options to use the application, choose an option and
+	 * activate the operation of each of the functions <br>
+	 * <b> pre: we need the user to choose what action to perform </b>
+	 * 
 	 * @param num menu option
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void menu(String num) throws InterruptedException {
+	public void menu(String num) throws InterruptedException, FileNotFoundException, IOException, ClassNotFoundException {
 
 		if (num.equals("2") || num.equals("1")) {
 			System.out.println("********BIENVENIDO A SNAKE AND LADDERS********\n"
@@ -72,7 +86,8 @@ public class Menu {
 
 			}
 			if (num.equals("2")) {
-				printThree();
+				loadData();
+				getScore();
 			}
 			menu(num);
 		} else {
@@ -83,24 +98,28 @@ public class Menu {
 		}
 	}
 
-	//_________________________________________________________________________
-	
+	// _________________________________________________________________________
+
 	/**
 	 * the game starts <br>
-	 * <b> pre: all data </b> 
-	 * @param columns  column number
-	 * @param rows  row number
-	 * @param snakes snake number
-	 * @param ladder ladder number
-	 * @param num4 
+	 * <b> pre: all data </b>
+	 * 
+	 * @param columns column number
+	 * @param rows    row number
+	 * @param snakes  snake number
+	 * @param ladder  ladder number
+	 * @param num4
 	 * @param players players number
 	 * @param ini
 	 * @param ch
-	 * @param win the player who won the game
+	 * @param win     the player who won the game
 	 * @throws InterruptedException
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws ClassNotFoundException 
 	 */
 	private void m(int columns, int rows, int snakes, int ladder, String num4, int players, int ini, char ch,
-			boolean win) throws InterruptedException {
+			boolean win) throws InterruptedException, FileNotFoundException, IOException, ClassNotFoundException {
 		String player = "";
 		if (ini == 0) {
 			player = game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch);
@@ -118,7 +137,7 @@ public class Menu {
 						System.out.println(game.printB());
 						scan.nextLine();
 					}
-					
+
 					int numMoves = game.rollDice();
 					System.out.println(numMoves + "<= resultado dado");
 					// game.movePlayer(game.playSnake(columns, rows, snakes, ladder, num4, players,
@@ -174,51 +193,36 @@ public class Menu {
 			}
 		}
 		if (win == false) {
+			
 			m(columns, rows, snakes, ladder, num4, players, ini, ch, win);
 		} else {
-			registerPlaye(player);
+			registerScore(player,columns,rows);
 		}
 	}
 
-	//_______________________________________________________________________________________
-	/**
-	 * is in charge of registering the players<br>
-	 * <b> pre: we need user to register player name </b> 
-	 * @param player
-	 */
-	public void registerPlaye(String player) {
-		System.out.println("Digite el Nombre del jugador");
-		String name = scan.nextLine();
-		int out = movement;
-		movement = 0;
-		game.addPlayer(name, player, out);
-	}
-	//_______________________________________________________________________________________________
 	
-	
-	public void printThree() {
-		System.out.println(game.printOrder());
-	}
-	//______________________________________________________________________________________________
-	
-	
+	// ______________________________________________________________________________________________
+
 	/**
 	 * so that it runs through it automatically <br>
-	 * <b> pre: you need the indicated command </b> 
-	 * @param columns  column number
-	 * @param rows  row number
-	 * @param snakes snake number
-	 * @param ladder ladder number
-	 * @param num4 
+	 * <b> pre: you need the indicated command </b>
+	 * 
+	 * @param columns column number
+	 * @param rows    row number
+	 * @param snakes  snake number
+	 * @param ladder  ladder number
+	 * @param num4
 	 * @param players players number
 	 * @param ini
 	 * @param ch
-	 * @param win the player who won the game
+	 * @param win     the player who won the game
 	 * @throws InterruptedException
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	//para q lo recorra automaticamente 
+	// para q lo recorra automaticamente
 	private void menuAuto(int columns, int rows, int snakes, int ladder, String num4, int players, int ini, char ch,
-			boolean win) throws InterruptedException {
+			boolean win) throws InterruptedException, FileNotFoundException, IOException {
 		String player = "";
 		if (ini == 0) {
 			player = game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch);
@@ -266,10 +270,73 @@ public class Menu {
 			}
 		}
 		if (win == false) {
+			
 			menuAuto(columns, rows, snakes, ladder, num4, players, ini, ch, win);
 		} else {
-			registerPlaye(player);
+			registerScore(player,columns,rows);
 		}
 	}
+
+	public void saveData() throws FileNotFoundException, IOException {
+		ObjectOutputStream ob = new ObjectOutputStream(new FileOutputStream(SAVE_PLAYER));
+		ob.writeObject(playerN);
+		ob.close();
+	}
+
+	public void loadData() throws FileNotFoundException, IOException, ClassNotFoundException {
+		File f = new File(SAVE_PLAYER);
+		if (f.exists()) {
+			ObjectInputStream ob = new ObjectInputStream(new FileInputStream(f));
+			playerN = (Players) ob.readObject();
+			ob.close();
+		}
+	}
+	// _______________________________________________________________________________________
 	
+	
+	public void registerScore(String symbol,int column,int rows) throws FileNotFoundException, IOException {
+		System.out.println("Digite el Nombre del jugador");
+		String name = scan.nextLine();
+		int mult = column * rows;
+		int out = mult*movement;
+		
+		movement = 0;
+		Players player1 = new Players(name,symbol,out);
+		if (playerN == null) {
+			playerN = player1;
+		} else {
+			registerScore( playerN,player1);
+		}
+		saveData();
+	}
+
+	private void registerScore(Players player1, Players newPlayer) {
+
+		if (newPlayer.getScore() >= player1.getScore()) {
+			if (player1.getLeft() == null) {
+
+				player1.setLeft(newPlayer);
+			} else {
+				registerScore(player1, newPlayer);
+			}
+
+		} else {
+			if (player1.getRight() == null) {
+
+				player1.setRight(newPlayer);
+			} else {
+				registerScore(player1.getRight(), newPlayer);
+			}
+		}
+	}
+	public void getScore() {
+		getScore(playerN);
+	}
+	private void getScore(Players current) {
+		if(current != null) {
+			getScore(current.getLeft());
+			System.out.println(current.getNickName()+" "+current.getScore());
+			getScore(current.getRight());
+		}
+	}
 }
