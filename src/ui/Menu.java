@@ -294,7 +294,15 @@ public class Menu {
 	}
 	// _______________________________________________________________________________________
 	
-	
+	/**
+	 * record averages <br>
+	 * <b> pre: player averages </b>
+	 * @param symbol
+	 * @param column
+	 * @param rows
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	public void registerScore(String symbol,int column,int rows) throws FileNotFoundException, IOException {
 		System.out.println("Digite el Nombre del jugador");
 		String name = scan.nextLine();
@@ -310,7 +318,15 @@ public class Menu {
 		}
 		saveData();
 	}
-
+	
+	
+	
+	/**
+	 * store them in the nodes </b>
+	 * <b> pre: each player's scores </b>
+	 * @param player1
+	 * @param newPlayer
+	 */
 	private void registerScore(Players player1, Players newPlayer) {
 
 		if (newPlayer.getScore() >= player1.getScore()) {
@@ -333,6 +349,13 @@ public class Menu {
 	public void getScore() {
 		getScore(playerN);
 	}
+	
+	
+	/**
+	 * get the scores </b>
+	 * <b> pre: that the players end the game </b>
+	 * @param current
+	 */
 	private void getScore(Players current) {
 		
 		if(current != null) {
