@@ -220,10 +220,11 @@ public class Menu {
 	 * @throws InterruptedException
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
+	 * @throws ClassNotFoundException 
 	 */
 	// para q lo recorra automaticamente
 	private void menuAuto(int columns, int rows, int snakes, int ladder, String num4, int players, int ini, char ch,
-			boolean win) throws InterruptedException, FileNotFoundException, IOException {
+			boolean win) throws InterruptedException, FileNotFoundException, IOException, ClassNotFoundException {
 		String player = "";
 		if (ini == 0) {
 			player = game.playSnake(columns, rows, snakes, ladder, num4, players, ini, ch);
@@ -273,8 +274,10 @@ public class Menu {
 		if (win == false) {
 			
 			menuAuto(columns, rows, snakes, ladder, num4, players, ini, ch, win);
-		} else {
+		} else {		
 			registerScore(player,columns,rows);
+			menu("1");
+			
 		}
 	}
 
