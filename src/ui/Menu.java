@@ -334,7 +334,7 @@ public class Menu {
 
 				player1.setLeft(newPlayer);
 			} else {
-				registerScore(player1, newPlayer);
+				registerScore(player1.getLeft(), newPlayer);
 			}
 
 		} else {
