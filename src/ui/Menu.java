@@ -21,7 +21,8 @@ public class Menu {
 	private int movement;
 	private Players playerN;
 	
-	public Menu() {
+	public Menu() throws FileNotFoundException, ClassNotFoundException, IOException {
+		loadData();
 		game = new Game();
 		movement = 0;
 	}
@@ -86,7 +87,7 @@ public class Menu {
 
 			}
 			if (num.equals("2")) {
-				loadData();
+				
 				getScore();
 			}
 			menu(num);

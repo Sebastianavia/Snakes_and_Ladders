@@ -11,7 +11,7 @@ import java.io.IOException;
 public class Main {
 	private Menu menu;
 
-	public Main() {
+	public Main() throws FileNotFoundException, ClassNotFoundException, IOException {
 		menu = new Menu();
 
 	}
