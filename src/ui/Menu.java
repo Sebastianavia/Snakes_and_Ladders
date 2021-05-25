@@ -197,7 +197,7 @@ public class Menu {
 			
 			m(columns, rows, snakes, ladder, num4, players, ini, ch, win);
 		} else {
-			registerScore(player,columns,rows);
+			registerScore(player,columns,rows,num4);
 		}
 	}
 
@@ -275,7 +275,7 @@ public class Menu {
 			
 			menuAuto(columns, rows, snakes, ladder, num4, players, ini, ch, win);
 		} else {		
-			registerScore(player,columns,rows);
+			registerScore(player,columns,rows,num4);
 			menu("1");
 			
 		}
@@ -306,14 +306,14 @@ public class Menu {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public void registerScore(String symbol,int column,int rows) throws FileNotFoundException, IOException {
+	public void registerScore(String symbol,int column,int rows,String characters) throws FileNotFoundException, IOException {
 		System.out.println("Digite el Nombre del jugador");
 		String name = scan.nextLine();
 		int mult = column * rows;
 		int out = mult*movement;
 		
 		movement = 0;
-		Players player1 = new Players(name,symbol,out);
+		Players player1 = new Players(name,symbol,out,characters);
 		if (playerN == null) {
 			playerN = player1;
 		} else {
@@ -365,7 +365,7 @@ public class Menu {
 			
 			getScore(current.getLeft());
 			
-			System.out.println(current.getNickName()+" "+current.getScore());
+			System.out.println(current.data());
 			
 			getScore(current.getRight());
 		}

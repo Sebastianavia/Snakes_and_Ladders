@@ -22,10 +22,11 @@ public class Players implements Serializable{
 	 * @param s player's symbol
 	 * @param sc player's  score
 	 */
-	public  Players(String n,String s,int sc) {
+	public  Players(String n,String s,int sc,String ca) {
 		nickName = n;
 		symbol= s;
 		score= sc;
+		caracters = ca;
 	}
 	
 	
@@ -148,7 +149,7 @@ public class Players implements Serializable{
 	 * @return a message showing all the information of the players
 	 */
 	public String data() {
-		String out =	"Nombre: "+this.nickName+" Simbolos: "+symbol+" Puntaje: "+score+"\n"+caracters ;
+		String out =	"Nombre: "+this.nickName+" Simbolo: "+symbol+" Puntaje: "+score+" Jugadores: "+caracters ;
 		return out;
 		
 	}
