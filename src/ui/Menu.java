@@ -16,7 +16,10 @@ import model.Players;
 public class Menu {
 	private final static String SAVE_PLAYER = "src/data/player.txt";
 	public final static String SPLIT = " ";
+	public final static String opcionPlayers = ",.-{}´+'¿=!#$%&/°|";
 	private Scanner scan = new Scanner(System.in);
+	private int positionA;
+	private int positionB;
 	private Game game;
 	private int movement;
 	private Players playerN;
@@ -25,6 +28,8 @@ public class Menu {
 		loadData();
 		game = new Game();
 		movement = 0;
+		positionA = 0;
+		positionB = 1;
 	}
 
 	/**
@@ -44,6 +49,8 @@ public class Menu {
 					+ "********* Para iniciar selecione una opcion *********\n" + "** 1- Iniciar juego\n"
 					+ "** 2- Mostrar tablero de posiciones\n" + "** 3- Salir del juego");
 			System.out.println("");
+			positionA = 0;
+			positionB = 1;
 			num = scan.nextLine();
 			if (num.equals("1")) {
 				System.out.println("Ingrese los valores separados por espacios");
@@ -56,6 +63,17 @@ public class Menu {
 				int ladder = Integer.parseInt(parts[3]);
 				num4 = parts[4];
 				int players = num4.length();
+				if(isNumeric(num4)) {
+					
+					int numPlayers = Integer.parseInt(num4);
+					String out = "";
+					if(numPlayers != 0) {
+					num4 =players(out,numPlayers );
+					players = numPlayers;
+					}else {
+						System.out.println("Tomaremos el signo del jugador como 0");
+					}
+				}
 				int value = 0;
 				if (snakes == 0) {
 					value = ladder * 2;
@@ -96,6 +114,24 @@ public class Menu {
 				System.out.println("fINALIZO EL JUEGO");
 
 			}
+		}
+	}
+	public String players(String out, int numP) {
+		if(numP >= 1) {
+			out+=opcionPlayers.substring(positionA, positionB);
+			numP--;
+			positionA++;
+			positionB++;
+			out=players(out, numP);
+		}
+		return out;
+	}
+	public static boolean isNumeric(String cadena){
+		try {
+			Integer.parseInt(cadena);
+			return true;
+		} catch (NumberFormatException nfe){		
+			return false;
 		}
 	}
 
