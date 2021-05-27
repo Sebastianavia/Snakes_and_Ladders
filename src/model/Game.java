@@ -328,7 +328,15 @@ public class Game {
 		
 	
 	}
-
+	
+	
+	/**
+	 * returns the player's movement and symbol<br>
+	 * <b> pre: you need to have entered each player's symbol </b>
+	 * @param symbol
+	 * @param position
+	 * @return lm.foundPlayer(symbol, position)
+	 */
 	public boolean movePlayer(String symbol, int position) {
 		return lm.foundPlayer(symbol, position);
 

@@ -36,7 +36,6 @@ public class Menu {
 	 * prints on screen the options to use the application, choose an option and
 	 * activate the operation of each of the functions <br>
 	 * <b> pre: we need the user to choose what action to perform </b>
-	 * 
 	 * @param num menu option
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
@@ -116,6 +115,14 @@ public class Menu {
 			}
 		}
 	}
+	
+	/**
+	 * recibir el número de jugadores <br>
+	 * <b> pre: enter the number of players, if you do not write the symbols </b>
+	 * @param out
+	 * @param numP
+	 * @return false;
+	 */
 	public String players(String out, int numP) {
 		if(numP >= 1) {
 			out+=opcionPlayers.substring(positionA, positionB);
@@ -126,6 +133,13 @@ public class Menu {
 		}
 		return out;
 	}
+	
+	/**
+	 * <br>
+	 * <b> pre:  </b>
+	 * @param cadena
+	 * @return false
+	 */
 	public static boolean isNumeric(String cadena){
 		try {
 			Integer.parseInt(cadena);
@@ -140,7 +154,6 @@ public class Menu {
 	/**
 	 * the game starts <br>
 	 * <b> pre: all data </b>
-	 * 
 	 * @param columns column number
 	 * @param rows    row number
 	 * @param snakes  snake number
@@ -243,7 +256,6 @@ public class Menu {
 	/**
 	 * so that it runs through it automatically <br>
 	 * <b> pre: you need the indicated command </b>
-	 * 
 	 * @param columns column number
 	 * @param rows    row number
 	 * @param snakes  snake number
@@ -316,13 +328,24 @@ public class Menu {
 			
 		}
 	}
-
+	/**
+	 * save the information of the winners <br>
+	 * <b> pre: there need to be winners  </b>
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	public void saveData() throws FileNotFoundException, IOException {
 		ObjectOutputStream ob = new ObjectOutputStream(new FileOutputStream(SAVE_PLAYER));
 		ob.writeObject(playerN);
 		ob.close();
 	}
-
+	/**
+	 * if the player exists, load the information <br>
+	 * <b> pre:  that the player has information or that there is </b>
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public void loadData() throws FileNotFoundException, IOException, ClassNotFoundException {
 		File f = new File(SAVE_PLAYER);
 		if (f.exists()) {
@@ -385,6 +408,8 @@ public class Menu {
 			}
 		}
 	}
+	
+
 	public void getScore() {
 		getScore(playerN);
 	}
